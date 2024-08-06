@@ -2,7 +2,14 @@
 #include "headers/hash.h"
 #define MAX_HASH_TABLE_SIZE 100
 
-DataItem* 
+DataItem *initialize_hashtable()
+{
+    DataItem *hash_table = malloc(sizeof(DataItem));
+    if (hash_table == NULL)
+    {
+        printf("Memory allocation failed.");
+    }
+}
 
 int hash(int key)
 {
@@ -13,8 +20,6 @@ int hash(int key)
 void insert(int key, int data)
 {
     // Remember to check for collisions!
-
-
 }
 
 int search(int key);
