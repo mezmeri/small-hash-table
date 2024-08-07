@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "headers/hash.h"
 
 #define MAX_HASH_TABLE_SIZE 100
@@ -12,7 +13,11 @@ HashTable *init_hashtable()
         return NULL;
     }
 
-    table->itemArray[0] = NULL;
+    // This might be overkill idk
+    for (unsigned int i = 0; i < MAX_HASH_TABLE_SIZE; i++)
+    {
+        table->itemArray[i] = NULL;
+    }
 }
 
 int hash(int key)
@@ -22,7 +27,45 @@ int hash(int key)
 
 void insert(int key, int data, HashTable *table)
 {
-    // Remember to check for collisions!
+    int hashIndex = hash(key);
+
+    DataItem *item = (DataItem *)malloc(sizeof(DataItem));
+    if (item == NULL)
+    {
+        printf("Insert item memory allocation failed.");
+    }
+    else
+    {
+        item->key = key;
+        item->data = data;
+    }
+
+    // Check to see if the key exists first (and if the slot is occcupied)
+    if (table->itemArray[hashIndex] == NULL)
+    {
+        table->itemArray[hashIndex] = item;
+    }
+    else
+    {
+        // Begin probing the hash table
+        while (table->itemArray[hashIndex] != NULL)
+        {
+            if (table->itemArray[hashIndex]->key == key && table->itemArray[hashIndex] != NULL)
+            {
+                free(item);
+                table->itemArray[hashIndex]->data = data;
+                break;
+            }
+
+            hashIndex = (hashIndex + 1) % MAX_HASH_TABLE_SIZE;
+
+            if (table->itemArray[hashIndex] == NULL)
+            {
+                table->itemArray[hashIndex] = item;
+                break;
+            }
+        }
+    }
 }
 
 int search(int key, HashTable *table)
