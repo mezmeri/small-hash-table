@@ -20,7 +20,7 @@ int hash(int key);
 
 void insert(int key, int data, HashTable *table);
 
-int search(int key, HashTable *table);
+DataItem *search(int key, HashTable *table);
 
 void remove_key(int key, HashTable *table);
 
