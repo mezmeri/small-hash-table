@@ -33,6 +33,7 @@ void insert(int key, int data, HashTable *table)
     if (item == NULL)
     {
         printf("Insert item memory allocation failed.");
+        return;
     }
     else
     {
