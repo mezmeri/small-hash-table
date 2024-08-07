@@ -1,5 +1,5 @@
 
-#define SIZE 100
+#define SIZE 15
 #ifndef HASH
 #define HASH
 

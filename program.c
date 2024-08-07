@@ -14,7 +14,7 @@ int main()
     insert(7, 10, table);
     insert(8, 81, table);
     insert(9, 52, table);
-    insert(10, 13, table);
+    insert(23, 13, table);
 
     insert(2, 200, table);
 

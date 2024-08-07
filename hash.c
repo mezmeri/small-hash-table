@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "headers/hash.h"
 
-#define MAX_HASH_TABLE_SIZE 100
+#define MAX_HASH_TABLE_SIZE 15
 
 HashTable *init_hashtable()
 {
