@@ -7,12 +7,17 @@ typedef struct
     int key;
 } DataItem;
 
+typedef struct
+{
+    DataItem *item;
+} HashTable;
+
 int hash(int key);
 
-void insert(int key, int data);
+void insert(int key, int data, HashTable *table);
 
-int search(int key);
+int search(int key, HashTable *table);
 
-void remove(int key);
+void remove_key(int key);
 
 #endif

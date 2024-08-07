@@ -2,12 +2,13 @@
 #include "headers/hash.h"
 #define MAX_HASH_TABLE_SIZE 100
 
-DataItem *initialize_hashtable()
+HashTable *init_hashtable()
 {
-    DataItem *hash_table = malloc(sizeof(DataItem));
-    if (hash_table == NULL)
+    HashTable *table = (HashTable *)malloc(sizeof(HashTable));
+    if (table == NULL)
     {
-        printf("Memory allocation failed.");
+        printf("Init memory allocation failed.");
+        return NULL;
     }
 }
 
@@ -17,11 +18,13 @@ int hash(int key)
     return key % MAX_HASH_TABLE_SIZE;
 }
 
-void insert(int key, int data)
+void insert(int key, int data, HashTable *table)
 {
     // Remember to check for collisions!
 }
 
-int search(int key);
+int search(int key, HashTable *table);
 
-void remove(int key);
+void remove_key(int key, HashTable *table)
+{
+}
