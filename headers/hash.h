@@ -1,3 +1,4 @@
+#include <stdbool.h>
 
 #define SIZE 15
 #ifndef HASH
@@ -7,6 +8,7 @@ typedef struct
 {
     int data;
     int key;
+    bool isTombstone;
 } DataItem;
 
 typedef struct

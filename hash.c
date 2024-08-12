@@ -48,9 +48,10 @@ void insert(int key, int data, HashTable *table)
     }
     else
     {
-        // Begin probing the hash table
+        // Probe the array until an available slot is found
         while (table->itemArray[hashIndex] != NULL)
         {
+            // If the element exists, update the data and keep the key
             if (table->itemArray[hashIndex]->key == key && table->itemArray[hashIndex] != NULL)
             {
                 free(item);
@@ -59,6 +60,11 @@ void insert(int key, int data, HashTable *table)
             }
 
             hashIndex = (hashIndex + 1) % MAX_HASH_TABLE_SIZE;
+
+            if (table->itemArray[hashIndex]->isTombstone == true)
+            {
+                table->itemArray[hashIndex] = item;
+            }
 
             if (table->itemArray[hashIndex] == NULL)
             {
@@ -71,8 +77,57 @@ void insert(int key, int data, HashTable *table)
 
 DataItem *search(int key, HashTable *table)
 {
+    int hashIndex = hash(key);
+
+    // Check for NULL-entry
+    if (table->itemArray[hashIndex] == NULL)
+    {
+        printf("NULL ENTRY. Entry not found.");
+        return NULL;
+    }
+
+    if (table->itemArray[hashIndex]->key == key)
+    {
+        return table->itemArray[hashIndex];
+    }
+    else
+    {
+        while (table->itemArray[hashIndex]->key != key)
+        {
+            int startingIndex = hashIndex;
+            hashIndex = (hashIndex + 1) % MAX_HASH_TABLE_SIZE;
+            if (table->itemArray[hashIndex] == NULL)
+            {
+                printf("NULL ENTRY. Entry not found.");
+                return NULL;
+            }
+
+            if (hashIndex == startingIndex)
+            {
+                break;
+            }
+
+            if (table->itemArray[hashIndex]->key == key)
+            {
+                return table->itemArray[hashIndex];
+            }
+        }
+
+        return NULL;
+    }
 }
 
 void remove_key(int key, HashTable *table)
 {
+    int hashIndex = hash(key);
+    if (table->itemArray[hashIndex] == NULL)
+    {
+        printf("NULL ENTRY. Entry not found.");
+        return NULL;
+    }
+
+    if (table->itemArray[hashIndex]->key == key)
+    {
+        table->itemArray[hashIndex]->isTombstone = true;
+    }
 }
